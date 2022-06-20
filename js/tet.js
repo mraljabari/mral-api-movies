@@ -1,4 +1,4 @@
-$('#search-button').on('click', function () {
+function searchMovie(){
     $.ajax({
         url: 'http://www.omdbapi.com',
         type: 'get',
@@ -13,22 +13,29 @@ $('#search-button').on('click', function () {
                 let movies = result.Search;
                 $('#movie-list').empty(); 
                 $.each(movies, function(i, data){
-                    $('#movie-list').append(`<div class="col-md-4">
-                    <div class="card mb-3">
-                        <img src="`+ data.Poster +`" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">`+ data.Title +`</h5>
-                            <p class="card-text">Type : `+ data.Type +`</p>
-                            <p class="card-text"><b>Year : `+ data.Year +`</b></p>
-                            <a href="#" class="btn btn-primary">`+ data.imdbID +`</a>
-                        </div>
-                        </div>
-                    </div>`)
+                    $('#movie-list').append(`<div class="col-md-2">
+                    
+                            <div class="col-16 pb-md-2">
+                                <a href="" class="card bg-dark text-white shadow-sm border-0">
+                                    <img class="card-img" style="opacity: .50;  ;
+                                    height: 15vw;
+                                    object-fit: cover" src="`+ data.Poster +`" alt="Card image">
+                                    <span class="badge badge-dark font-weight-normal">`+ data.Title +`</span>
+                                    <span class="badge badge-dark font-weight-normal">`+ data.Year +`</span>
+                                    <div class="card-img-overlay d-flex flex-column align-items-start">
+                                        <h4 class="card-title"></h4>
+                                        <p class="card-text mt-auto"></p>
+    
+                                    </div>
+                                </a>
+                            </div>
+                        
+                    `)
                 });
             }else{
                 console.log(result.Error);
                 $('#movie-list').empty(); 
-
+    
                 $('#movie-list').html(`
                     <div class="col">
                         <h1 class=text-center>` + result.Error + `</h1>
@@ -37,4 +44,21 @@ $('#search-button').on('click', function () {
             }
         }
     });
+}
+
+
+function searchMovieYear(){
+       
+}
+
+
+
+$('#search-button').on('click', function () {
+    searchMovie();
 });
+
+$('#search-input').on('keyup', function(e){
+    if(e.keyCode === 13){
+        searchMovie();
+    }
+})
